@@ -132,7 +132,7 @@ function DiscoveryPanel({ currentEntry, onRate }: {
   const [rated, setRated] = useState(currentEntry.album_rating || "");
 
   useEffect(() => {
-    fetch(`{API_BASE}/life/suggestions`)
+    fetch(`${API_BASE}/life/suggestions`)
       .then(r => r.json())
       .then(d => { setSuggestion(d); setLoading(false); })
       .catch(() => setLoading(false));
