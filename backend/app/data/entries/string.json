@@ -1,0 +1,15 @@
+{
+  "date": "string",
+  "sleep_hours": 10.0,
+  "sleep_quality": 3,
+  "study_hours": 3.0,
+  "study_notes": "wfwf",
+  "workout": true,
+  "workout_type": "chest",
+  "cigarettes": 1,
+  "ate_clean": true,
+  "mood_score": 5,
+  "mood_word": "nice",
+  "journal": "i wanna fuck ",
+  "saved_at": "2026-05-18T08:13:26.759729"
+}
