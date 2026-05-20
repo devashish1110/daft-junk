@@ -37,8 +37,14 @@ app = FastAPI(title="DAFT Junk API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000""https://daft-junk.vercel.app",  # update after you get your Vercel URL
-    "https://*.vercel.app",],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://daft-junk.vercel.app",
+        "https://daft-junk-devs-projects-27a2efa5.vercel.app",
+        "https://daft-junk-9md2lcizc-devs-projects-27a2efa5.vercel.app",
+        "https://daft-junk-aywx8mgts-devs-projects-27a2efa5.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
