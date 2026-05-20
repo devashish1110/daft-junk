@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { API_BASE } from "@/lib/api";
 interface LifeEntry {
   date: string;
   sleep_hours: number;
@@ -132,7 +132,7 @@ function DiscoveryPanel({ currentEntry, onRate }: {
   const [rated, setRated] = useState(currentEntry.album_rating || "");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/life/suggestions")
+    fetch(`{API_BASE}/life/suggestions`)
       .then(r => r.json())
       .then(d => { setSuggestion(d); setLoading(false); })
       .catch(() => setLoading(false));
@@ -223,23 +223,23 @@ export default function Life() {
 
   useEffect(() => {
     setMounted(true);
-    fetch("http://127.0.0.1:8000/life/today").then(r => r.json()).then(d => { if (d.date) setForm(d); }).catch(() => {});
-    fetch("http://127.0.0.1:8000/life/history").then(r => r.json()).then(setHistory).catch(() => {});
-    fetch("http://127.0.0.1:8000/life/streak").then(r => r.json()).then(d => setStreak(d.smoke_free_days)).catch(() => {});
+    fetch(`${API_BASE}/life/today`).then(r => r.json()).then(d => { if (d.date) setForm(d); }).catch(() => {});
+    fetch(`${API_BASE}/life/history`).then(r => r.json()).then(setHistory).catch(() => {});
+    fetch(`${API_BASE}/life/streak`).then(r => r.json()).then(d => setStreak(d.smoke_free_days)).catch(() => {});
   }, []);
 
   async function save() {
     setSaving(true);
     try {
-      await fetch("http://127.0.0.1:8000/life/log", {
+      await fetch(`${API_BASE}/life/log`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-      fetch("http://127.0.0.1:8000/life/history").then(r => r.json()).then(setHistory);
-      fetch("http://127.0.0.1:8000/life/streak").then(r => r.json()).then(d => setStreak(d.smoke_free_days));
+      fetch(`${API_BASE}/life/history`).then(r => r.json()).then(setHistory);
+      fetch(`${API_BASE}/life/streak`).then(r => r.json()).then(d => setStreak(d.smoke_free_days));
     } catch {
       alert("Could not save. Is the backend running?");
     } finally {

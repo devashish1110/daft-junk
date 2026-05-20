@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { API_BASE } from "@/lib/api";
 interface NewsItem {
   title: string;
   summary: string;
@@ -72,7 +72,7 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
     if (enrichment) { setExpanded(e => !e); return; }
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/enrich", {
+      const res = await fetch(`${API_BASE}/enrich`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: item.title, summary: item.summary }),
@@ -244,7 +244,7 @@ export default function Home() {
   const [filter, setFilter] = useState<Filter>("all");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/news")
+    fetch(`${API_BASE}/news`)
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(data => {
         setNews(Array.isArray(data) ? data : [...(data.primary||[]), ...(data.suggested||[])]);
